@@ -19,94 +19,73 @@
       --line: #ECE3D9;
       --radius: 16px;
       --shadow: 0 2px 10px rgba(74, 53, 36, 0.06), 0 1px 3px rgba(74, 53, 36, 0.05);
-      --sidebar-w: 300px;
     }
 
     * { box-sizing: border-box; }
+
+    /* Background lives on <html> so the whole viewport is always filled,
+       even when a single lesson is shorter than the screen (fixes the
+       iOS Safari "background cuts off partway down" issue). */
+    html { background: var(--bg); }
     html, body { margin: 0; padding: 0; }
     body {
+      min-height: 100dvh;            /* fill the screen like a normal page */
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       -webkit-text-size-adjust: 100%;
-      overflow-x: hidden; /* keep off-canvas drawer from creating sideways scroll */
     }
 
-    /* ---------- Top app bar (mobile only) ---------- */
-    .appbar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 14px;
+    .container { max-width: 820px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
+
+    /* ---------- Header / branding (restored) ---------- */
+    header { text-align: center; padding: 34px 16px 22px; }
+    header .academy { color: var(--accent); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.12em; margin: 0 0 6px; }
+    header .class-title { font-size: 1.9rem; font-weight: 800; margin: 0 0 8px; letter-spacing: 0.02em; }
+    header .church { color: var(--muted); font-size: 0.9rem; margin: 0; }
+    header .rule { width: 48px; height: 4px; border-radius: 2px; background: var(--accent); margin: 18px auto 0; }
+
+    /* ---------- Lesson tabs (sticky strip under the header) ---------- */
+    .tabs-bar {
       position: sticky;
       top: 0;
-      z-index: 30;
-      background: rgba(251, 246, 240, 0.95);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      z-index: 10;
+      background: var(--bg);
       border-bottom: 1px solid var(--line);
     }
-    .menu-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      min-height: 44px;
-      padding: 8px 14px;
+    .lesson-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      scrollbar-width: none;            /* Firefox */
+      -webkit-overflow-scrolling: touch;
+    }
+    .lesson-tabs::-webkit-scrollbar { display: none; }  /* WebKit */
+    .tab {
+      flex: 0 0 auto;
+      min-height: 42px;
+      padding: 8px 16px;
+      border: 1.5px solid var(--line);
       background: #fff;
-      border: 1.5px solid var(--accent);
-      color: var(--accent-dark);
-      font: inherit;
-      font-weight: 700;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .menu-btn .bars { font-size: 1.1rem; line-height: 1; }
-    .appbar-title { font-weight: 800; font-size: 1.05rem; }
-
-    /* ---------- Layout: sidebar + main ---------- */
-    .layout { display: flex; align-items: flex-start; }
-
-    .sidebar {
-      background: var(--card);
-      padding: 20px 14px;
-      overflow-y: auto;
-    }
-    .brand { text-align: center; padding: 6px 6px 16px; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
-    .brand .academy { color: var(--accent); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.12em; margin: 0 0 6px; }
-    .brand .class-title { font-size: 1.4rem; font-weight: 800; margin: 0 0 6px; }
-    .brand .church { color: var(--muted); font-size: 0.82rem; margin: 0; }
-
-    .nav-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; color: var(--muted); padding: 0 8px 8px; }
-    .lesson-nav { display: flex; flex-direction: column; gap: 4px; }
-    .nav-item {
-      display: block;
-      width: 100%;
-      text-align: start;
-      font: inherit;
-      line-height: 1.35;
-      background: transparent;
-      border: none;
-      border-left: 3px solid transparent;
-      border-radius: 8px;
-      padding: 10px 12px;
-      cursor: pointer;
       color: var(--text);
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
     }
-    .nav-item:hover { background: var(--accent-soft); }
-    .nav-item.active { background: var(--accent-soft); border-left-color: var(--accent); }
-    .nav-item:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-    .nav-item .n { display: block; font-size: 0.76rem; font-weight: 700; color: var(--accent-dark); letter-spacing: 0.04em; }
-    .nav-item .ti { display: block; font-weight: 600; }
-    .nav-item .dt { display: block; font-size: 0.73rem; color: var(--muted); margin-top: 1px; }
+    .tab:hover { border-color: var(--accent); }
+    .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .tab:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-    .backdrop { position: fixed; inset: 0; background: rgba(40, 30, 20, 0.45); z-index: 35; }
-
-    .main { flex: 1 1 auto; min-width: 0; padding: 16px; }
-    .main-inner { max-width: 760px; margin: 0 auto; }
-
-    /* ---------- Lesson card ---------- */
+    /* ---------- Main / lesson card ---------- */
+    main { padding: 20px 0 56px; }
     .lesson { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 16px; }
     .lesson-head { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 4px; }
     .badge { display: inline-block; background: var(--accent-soft); color: var(--accent-dark); font-weight: 700; font-size: 0.85rem; padding: 4px 12px; border-radius: 999px; white-space: nowrap; }
@@ -136,108 +115,44 @@
     .state { text-align: center; color: var(--muted); padding: 48px 20px; font-size: 1.05rem; }
     .state .big { font-size: 2.2rem; display: block; margin-bottom: 10px; }
 
-    /* ---------- Mobile: sidebar becomes an off-canvas drawer ---------- */
-    @media (max-width: 879px) {
-      .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 84%;
-        max-width: 320px;
-        z-index: 40;
-        transform: translateX(-100%);
-        transition: transform 0.25s ease;
-        box-shadow: 0 0 40px rgba(0, 0, 0, 0.22);
-        border-right: 1px solid var(--line);
-      }
-      .sidebar.open { transform: translateX(0); }
-    }
-
-    /* ---------- Desktop: sidebar pinned open, no app bar ---------- */
-    @media (min-width: 880px) {
-      .appbar { display: none; }
-      .backdrop { display: none !important; }
-      .layout { max-width: 1100px; margin: 0 auto; }
-      .sidebar {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        width: var(--sidebar-w);
-        flex: 0 0 var(--sidebar-w);
-        border-right: 1px solid var(--line);
-      }
-      .main { padding: 28px 28px 56px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .sidebar { transition: none; }
-    }
+    footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 8px 16px 28px; }
   </style>
 </head>
 <body>
-  <!-- App bar (shown on phones; hidden on desktop where the sidebar is pinned) -->
-  <div class="appbar">
-    <button class="menu-btn" id="menuBtn" aria-label="開啟課程選單" aria-expanded="false" aria-controls="sidebar">
-      <span class="bars" aria-hidden="true">☰</span><span>課程</span>
-    </button>
-    <span class="appbar-title">木吉他基礎班</span>
+  <header>
+    <p class="academy">祂的敬拜學院</p>
+    <h1 class="class-title">木吉他基礎班 🎸</h1>
+    <p class="church">龍潭聖潔會</p>
+    <div class="rule"></div>
+  </header>
+
+  <!-- Lesson switcher: a horizontal, scrollable tab strip (sticky on scroll) -->
+  <div class="tabs-bar">
+    <nav class="lesson-tabs" id="tabs" aria-label="課程切換"></nav>
   </div>
 
-  <div class="backdrop" id="backdrop" hidden></div>
+  <main aria-live="polite">
+    <div class="container" id="main">
+      <div class="state"><span class="big">🎵</span>課程載入中…</div>
+    </div>
+  </main>
 
-  <div class="layout">
-    <aside class="sidebar" id="sidebar" aria-label="課程列表">
-      <div class="brand">
-        <p class="academy">祂的敬拜學院</p>
-        <h1 class="class-title">木吉他基礎班 🎸</h1>
-        <p class="church">龍潭聖潔會</p>
-      </div>
-      <p class="nav-label">課程列表</p>
-      <nav class="lesson-nav" id="lessonNav"><!-- lesson buttons rendered here --></nav>
-    </aside>
-
-    <main class="main" id="main" aria-live="polite">
-      <div class="main-inner">
-        <div class="state"><span class="big">🎵</span>課程載入中…</div>
-      </div>
-    </main>
-  </div>
+  <footer>龍潭聖潔會 ・ 祂的敬拜學院</footer>
 
   <script>
     // ---------------------------------------------------------------------------
-    // Church guitar lessons — static single-lesson viewer with a lesson switcher.
-    // Reads lessons.json, lists lessons in the sidebar, shows one at a time.
-    // No framework, no backend. UI strings are Traditional Chinese; code English.
+    // Church guitar lessons — static viewer.
+    // Reads lessons.json, lists lessons as tabs, shows one lesson at a time.
+    // No framework, no backend. UI strings Traditional Chinese; code English.
     // ---------------------------------------------------------------------------
 
-    const menuBtn = document.getElementById('menuBtn');
-    const sidebar = document.getElementById('sidebar');
-    const backdrop = document.getElementById('backdrop');
-    const nav = document.getElementById('lessonNav');
+    const tabs = document.getElementById('tabs');
     const main = document.getElementById('main');
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let lessons = [];
     let activeIndex = 0;
 
-    // ----- Drawer (mobile) -----
-    const isMobile = () => window.matchMedia('(max-width: 879px)').matches;
-    function openDrawer() {
-      sidebar.classList.add('open');
-      backdrop.hidden = false;
-      menuBtn.setAttribute('aria-expanded', 'true');
-    }
-    function closeDrawer() {
-      sidebar.classList.remove('open');
-      backdrop.hidden = true;
-      menuBtn.setAttribute('aria-expanded', 'false');
-    }
-    menuBtn.addEventListener('click', () =>
-      sidebar.classList.contains('open') ? closeDrawer() : openDrawer());
-    backdrop.addEventListener('click', closeDrawer);
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
-
-    // ----- File rendering -----
     function iconFor(type) {
       switch (type) {
         case 'pdf': return '📄';
@@ -346,59 +261,47 @@
       return card;
     }
 
-    // ----- Sidebar + selection -----
-    function buildNav() {
-      nav.innerHTML = '';
+    function buildTabs() {
+      tabs.innerHTML = '';
       lessons.forEach((lesson, i) => {
         const b = document.createElement('button');
         b.type = 'button';
-        b.className = 'nav-item' + (i === activeIndex ? ' active' : '');
+        b.className = 'tab' + (i === activeIndex ? ' active' : '');
         b.setAttribute('aria-current', i === activeIndex ? 'true' : 'false');
-
-        const n = document.createElement('span');
-        n.className = 'n';
-        n.textContent = '第 ' + (lesson.lesson ?? '') + ' 課';
-        const ti = document.createElement('span');
-        ti.className = 'ti';
-        ti.textContent = lesson.title || '';
-        b.appendChild(n);
-        b.appendChild(ti);
-        if (lesson.date) {
-          const dt = document.createElement('span');
-          dt.className = 'dt';
-          dt.textContent = lesson.date;
-          b.appendChild(dt);
-        }
-        b.addEventListener('click', () => select(i));
-        nav.appendChild(b);
+        b.textContent = '第 ' + (lesson.lesson ?? '') + ' 課';
+        b.addEventListener('click', () => select(i, true));
+        tabs.appendChild(b);
       });
     }
 
-    function select(i) {
+    function select(i, userAction) {
       activeIndex = i;
-      Array.from(nav.children).forEach((c, idx) => {
+      Array.from(tabs.children).forEach((c, idx) => {
         const on = idx === i;
         c.classList.toggle('active', on);
         c.setAttribute('aria-current', on ? 'true' : 'false');
       });
-      main.innerHTML = '';
-      const inner = document.createElement('div');
-      inner.className = 'main-inner';
-      inner.appendChild(renderLesson(lessons[i]));
-      main.appendChild(inner);
 
-      // Keep a shareable/bookmarkable hash like #lesson-2.
+      main.innerHTML = '';
+      main.appendChild(renderLesson(lessons[i]));
+
+      // Keep the active tab in view within the horizontal strip.
+      const activeTab = tabs.children[i];
+      if (activeTab) {
+        activeTab.scrollIntoView({
+          inline: 'center', block: 'nearest',
+          behavior: userAction && !prefersReduced ? 'smooth' : 'auto',
+        });
+      }
+
+      // Bookmarkable hash like #lesson-2.
       const hash = '#lesson-' + lessons[i].lesson;
       if (location.hash !== hash) history.replaceState(null, '', hash);
-
-      if (isMobile()) closeDrawer();
-      window.scrollTo(0, 0);
     }
 
     function showState(emoji, message) {
+      tabs.innerHTML = '';
       main.innerHTML = '';
-      const inner = document.createElement('div');
-      inner.className = 'main-inner';
       const s = document.createElement('div');
       s.className = 'state';
       const big = document.createElement('span');
@@ -406,14 +309,12 @@
       big.textContent = emoji;
       s.appendChild(big);
       s.appendChild(document.createTextNode(message));
-      inner.appendChild(s);
-      main.appendChild(inner);
+      main.appendChild(s);
     }
 
     function start(rawLessons) {
       lessons = Array.isArray(rawLessons) ? rawLessons.slice() : [];
       if (lessons.length === 0) {
-        nav.innerHTML = '';
         showState('🎸', '目前還沒有課程，敬請期待');
         return;
       }
@@ -428,14 +329,14 @@
         if (found >= 0) idx = found;
       }
       activeIndex = idx;
-      buildNav();
-      select(idx);
+      buildTabs();
+      select(idx, false);
     }
 
     fetch('lessons.json', { cache: 'no-cache' })
       .then((res) => { if (!res.ok) throw new Error('HTTP ' + res.status); return res.json(); })
       .then((data) => start(data.lessons))
-      .catch(() => { nav.innerHTML = ''; showState('😢', '課程載入失敗，請稍後再試'); });
+      .catch(() => showState('😢', '課程載入失敗，請稍後再試'));
   </script>
 </body>
 </html>
