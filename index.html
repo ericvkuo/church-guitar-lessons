@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <!-- Mobile-first: fit to device width, no zoom lock so users can pinch-zoom sheet music -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="木吉他基礎班課程資料 — 投影片、樂譜與示範影片">
+  <title>木吉他基礎班 ｜ 祂的敬拜學院</title>
+  <style>
+    /* ---------- Design tokens (warm, wood-inspired palette, single accent) ---------- */
+    :root {
+      --accent: #C2691D;          /* warm amber-brown */
+      --accent-dark: #9E5114;
+      --accent-soft: #F6E7D7;     /* accent tint for pills/thumbnails */
+      --bg: #FBF6F0;              /* soft warm off-white */
+      --card: #FFFFFF;
+      --text: #2B2420;           /* warm near-black */
+      --muted: #8A7E74;          /* secondary text */
+      --line: #ECE3D9;           /* hairline borders */
+      --radius: 16px;
+      --shadow: 0 2px 10px rgba(74, 53, 36, 0.06), 0 1px 3px rgba(74, 53, 36, 0.05);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 16px 56px;
+    }
+
+    /* ---------- Header / branding ---------- */
+    header {
+      text-align: center;
+      padding: 36px 16px 24px;
+    }
+    header .academy {
+      color: var(--accent);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      margin: 0 0 6px;
+    }
+    header .class-title {
+      font-size: 1.9rem;
+      font-weight: 800;
+      margin: 0 0 8px;
+      letter-spacing: 0.02em;
+    }
+    header .church {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+    header .rule {
+      width: 48px;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--accent);
+      margin: 18px auto 0;
+    }
+
+    /* ---------- Lesson cards ---------- */
+    .lesson {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 16px;
+      margin-bottom: 20px;
+    }
+    .lesson-head {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .date {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .lesson-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin: 8px 0 4px;
+    }
+    .lesson-desc {
+      color: #5c5249;
+      margin: 0 0 14px;
+    }
+
+    /* ---------- File items ---------- */
+    .files { display: flex; flex-direction: column; gap: 12px; }
+
+    .file {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: #FCFAF7;
+    }
+    .file-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      word-break: break-word;
+    }
+    .file-icon { font-size: 1.15rem; line-height: 1; }
+
+    /* Media previews */
+    .thumb {
+      display: block;
+      width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    video.preview {
+      display: block;
+      width: 100%;
+      max-height: 420px;
+      background: #000;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    /* Action buttons — large tap targets for phones */
+    .actions { display: flex; gap: 10px; }
+    .btn {
+      flex: 1 1 0;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      padding: 0 12px;
+      transition: transform 0.04s ease, background 0.15s ease;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-ghost {
+      background: #fff;
+      color: var(--accent-dark);
+      border: 1.5px solid var(--accent);
+    }
+    .btn-ghost:hover { background: var(--accent-soft); }
+
+    /* ---------- States (loading / empty / error) ---------- */
+    .state {
+      text-align: center;
+      color: var(--muted);
+      padding: 48px 20px;
+      font-size: 1.05rem;
+    }
+    .state .big { font-size: 2.2rem; display: block; margin-bottom: 10px; }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      padding-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="academy">祂的敬拜學院</p>
+      <h1 class="class-title">木吉他基礎班 🎸</h1>
+      <p class="church">龍潭聖潔會</p>
+      <div class="rule"></div>
+    </header>
+
+    <main id="lessons" aria-live="polite">
+      <!-- Lessons are rendered here from lessons.json -->
+      <div class="state"><span class="big">🎵</span>課程載入中…</div>
+    </main>
+
+    <footer>龍潭聖潔會 ・ 祂的敬拜學院</footer>
+  </div>
+
+  <script>
+    // ---------------------------------------------------------------------------
+    // Church guitar lessons — static renderer.
+    // Reads lessons.json and builds the lesson list. No framework, no backend.
+    // All UI strings are Traditional Chinese; code/comments are English.
+    // ---------------------------------------------------------------------------
+
+    const container = document.getElementById('lessons');
+
+    // Map a file's declared type to a small emoji icon.
+    function iconFor(type) {
+      switch (type) {
+        case 'pdf': return '📄';
+        case 'image': return '🖼️';
+        case 'video': return '🎬';
+        default: return '📎';
+      }
+    }
+
+    // Build an <a> action button. `download` true => save-to-device button.
+    function actionButton(label, href, isDownload, downloadName) {
+      const a = document.createElement('a');
+      a.className = 'btn ' + (isDownload ? 'btn-primary' : 'btn-ghost');
+      a.href = href;
+      a.textContent = label;
+      if (isDownload) {
+        // Same-origin on GitHub Pages, so the browser honours this and saves
+        // the file straight to the device (works on iOS Safari 13+ / Android).
+        a.setAttribute('download', downloadName || '');
+      } else {
+        a.target = '_blank';
+        a.rel = 'noopener';
+      }
+      return a;
+    }
+
+    // Render a single file row (preview + open + download).
+    function renderFile(file) {
+      const wrap = document.createElement('div');
+      wrap.className = 'file';
+
+      // Name + icon
+      const nameEl = document.createElement('div');
+      nameEl.className = 'file-name';
+      const ic = document.createElement('span');
+      ic.className = 'file-icon';
+      ic.textContent = iconFor(file.type);
+      const txt = document.createElement('span');
+      txt.textContent = file.name || '檔案';
+      nameEl.appendChild(ic);
+      nameEl.appendChild(txt);
+      wrap.appendChild(nameEl);
+
+      // encodeURI keeps the path safe even with Traditional Chinese filenames.
+      const url = encodeURI(file.path || '');
+      const baseName = (file.path || '').split('/').pop();
+
+      // Inline preview by type. On load error we just hide the broken media
+      // and keep the open/download links (e.g. a file not added yet).
+      if (file.type === 'image') {
+        const img = document.createElement('img');
+        img.className = 'thumb';
+        img.src = url;
+        img.alt = file.name || '樂譜';
+        img.loading = 'lazy';
+        img.onerror = () => { img.style.display = 'none'; };
+        wrap.appendChild(img);
+      } else if (file.type === 'video') {
+        const v = document.createElement('video');
+        v.className = 'preview';
+        v.controls = true;
+        v.playsInline = true;       // iOS: play inline instead of fullscreen
+        v.preload = 'metadata';
+        v.src = url;
+        v.onerror = () => { v.style.display = 'none'; };
+        wrap.appendChild(v);
+      }
+
+      // Actions: every file type gets both Open and Download.
+      const actions = document.createElement('div');
+      actions.className = 'actions';
+      actions.appendChild(actionButton('開啟', url, false));
+      actions.appendChild(actionButton('下載', url, true, baseName));
+      wrap.appendChild(actions);
+
+      return wrap;
+    }
+
+    // Render a single lesson card.
+    function renderLesson(lesson) {
+      const card = document.createElement('article');
+      card.className = 'lesson';
+
+      const head = document.createElement('div');
+      head.className = 'lesson-head';
+
+      const badge = document.createElement('span');
+      badge.className = 'badge';
+      badge.textContent = '第 ' + (lesson.lesson ?? '') + ' 課';
+      head.appendChild(badge);
+
+      // Date is optional — show it only when present.
+      if (lesson.date) {
+        const d = document.createElement('span');
+        d.className = 'date';
+        d.textContent = lesson.date;
+        head.appendChild(d);
+      }
+      card.appendChild(head);
+
+      if (lesson.title) {
+        const t = document.createElement('h2');
+        t.className = 'lesson-title';
+        t.textContent = lesson.title;
+        card.appendChild(t);
+      }
+
+      if (lesson.description) {
+        const p = document.createElement('p');
+        p.className = 'lesson-desc';
+        p.textContent = lesson.description;
+        card.appendChild(p);
+      }
+
+      const files = document.createElement('div');
+      files.className = 'files';
+      (lesson.files || []).forEach((f) => files.appendChild(renderFile(f)));
+      card.appendChild(files);
+
+      return card;
+    }
+
+    function showState(emoji, message) {
+      container.innerHTML = '';
+      const s = document.createElement('div');
+      s.className = 'state';
+      s.innerHTML = '<span class="big"></span>';
+      s.querySelector('.big').textContent = emoji;
+      s.appendChild(document.createTextNode(message));
+      container.appendChild(s);
+    }
+
+    function render(lessons) {
+      if (!Array.isArray(lessons) || lessons.length === 0) {
+        showState('🎸', '目前還沒有課程，敬請期待');
+        return;
+      }
+      // Sort by lesson number, newest (highest) first — not by array order.
+      lessons.sort((a, b) => (b.lesson || 0) - (a.lesson || 0));
+      container.innerHTML = '';
+      lessons.forEach((lesson) => container.appendChild(renderLesson(lesson)));
+    }
+
+    // Load the lesson index. cache:no-cache so new lessons show up promptly.
+    fetch('lessons.json', { cache: 'no-cache' })
+      .then((res) => {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then((data) => render(data.lessons))
+      .catch(() => {
+        showState('😢', '課程載入失敗，請稍後再試');
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "lessons": [
+    {
+      "lesson": 1,
+      "date": "2026-06-21",
+      "title": "吉他入門",
+      "description": "認識木吉他與基本彈奏；練習詩歌：小小的夢想、這裡有榮耀。",
+      "files": [
+        { "name": "投影片", "path": "lessons/01/吉他入門_第一課.pdf", "type": "pdf" },
+        { "name": "小小的夢想（樂譜）", "path": "lessons/01/小小的夢想.jpg", "type": "image" },
+        { "name": "這裡有榮耀（樂譜）", "path": "lessons/01/這裡有榮耀.jpg", "type": "image" },
+        { "name": "小小的夢想（示範影片）", "path": "lessons/01/小小的夢想_demo.mp4", "type": "video" }
+      ]
+    }
+  ]
+}
