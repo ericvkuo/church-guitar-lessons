@@ -1,6 +1,16 @@
 {
   "lessons": [
     {
+      "lesson": 2,
+      "date": "2026-08-16",
+      "title": "G 調和弦與新節奏",
+      "description": "複習 C 調和弦，學習 G 調基本和弦（G、C、G/B、Am、D）與新的刷弦節奏；練習詩歌：這裡有榮耀。",
+      "files": [
+        { "name": "投影片", "path": "lessons/02/吉他入門_第二課.pdf", "type": "pdf" },
+        { "name": "這裡有榮耀（樂譜）", "path": "lessons/02/這裡有榮耀.jpg", "type": "image" }
+      ]
+    },
+    {
       "lesson": 1,
       "date": "2026-06-21",
       "title": "吉他入門",
