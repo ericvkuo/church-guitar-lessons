@@ -14,8 +14,14 @@ or download** every file directly to their device.
 ## How it works
 
 - `index.html` — the page. It `fetch`es `lessons.json` and renders the lessons.
-- `lessons.json` — the lesson index (the only file you normally edit).
+  It also holds the **tuning guide** (a static `<template>` near the bottom of the
+  file) — that's reference content, so it lives in the HTML rather than the JSON.
+- `lessons.json` — the lesson index **and** the upcoming-events list (the only
+  file you normally edit).
 - `lessons/<NN>/` — one folder per lesson, holding that lesson's actual files.
+
+The page shows one view at a time, picked from a sticky tab strip: one tab per
+lesson (newest first), then a pinned **🎸 調音教學** tab for the tuning guide.
 
 Lessons are identified and ordered by a **lesson number** (`lesson: 1, 2, 3, …`),
 not by date, because lessons don't follow a fixed weekly schedule. The page always
@@ -63,6 +69,28 @@ shows the highest lesson number on top.
 The page reads `type` to decide how to display each file, so the file extension's
 casing doesn't matter, and Traditional Chinese filenames are fine (the page
 URL-encodes them automatically).
+
+## Upcoming events (近期活動)
+
+The card under the site header comes from the `events` array at the top of
+`lessons.json`:
+
+```json
+"events": [
+  { "date": "2026-09-13", "title": "第三課", "note": "" },
+  { "date": "2026-11-28", "title": "敬拜學院結業式", "note": "上午" }
+]
+```
+
+- `date` (`YYYY-MM-DD`, **required**) — the weekday label (週日 / 週六 …) is
+  worked out from this, so you never type it by hand.
+- `title` — what shows next to the date.
+- `note` (optional) — a small grey hint after the title, e.g. `"上午"`.
+
+**Past events disappear on their own.** The page hides anything dated before
+today and sorts the rest soonest-first, so the card can't go stale — you only
+ever need to *add* entries. When nothing is upcoming the whole card is hidden.
+(An event with a missing or malformed `date` is skipped.)
 
 ## Video tips
 
