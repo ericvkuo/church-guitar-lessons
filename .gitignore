@@ -4,3 +4,6 @@
 # Editor / OS noise
 Thumbs.db
 *.swp
+
+# Video sources — commit the converted .mp4, not the originals
+*.mov

@@ -1,9 +1,24 @@
 {
   "events": [
-    { "date": "2026-09-13", "title": "第三課", "note": "" },
+    { "date": "2026-10-11", "title": "第四課", "note": "" },
     { "date": "2026-11-28", "title": "敬拜學院結業式", "note": "上午" }
   ],
   "lessons": [
+    {
+      "lesson": 3,
+      "date": "2026-09-13",
+      "title": "分解和弦",
+      "description": "學習分解和弦 T-1-2-3 與拇指管低音（根音）；認識 Capo 變調夾；練習詩歌：安靜。",
+      "files": [
+        { "name": "投影片", "path": "lessons/03/吉他入門_第三課.pdf", "type": "pdf" },
+        { "name": "安靜（樂譜）", "path": "lessons/03/安靜.jpg", "type": "image" },
+        { "name": "這裡有榮耀 刷弦", "path": "lessons/03/這裡有榮耀_strumming_standard_demo.mp4", "type": "video" },
+        { "name": "這裡有榮耀 刷弦（簡單版）", "path": "lessons/03/這裡有榮耀_strumming_easy_demo.mp4", "type": "video" },
+        { "name": "小小的夢想 撥弦", "path": "lessons/03/小小的夢想_finger_picking_demo.mp4", "type": "video" },
+        { "name": "安靜 撥弦", "path": "lessons/03/安靜_finger_picking_standard_demo.mp4", "type": "video" },
+        { "name": "安靜 撥弦（簡單版 不彈根音變化）", "path": "lessons/03/安靜_finger_picking_easy_demo.mp4", "type": "video" }
+      ]
+    },
     {
       "lesson": 2,
       "date": "2026-08-16",

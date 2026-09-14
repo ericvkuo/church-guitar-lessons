@@ -99,6 +99,12 @@ ever need to *add* entries. When nothing is upcoming the whole card is hidden.
 - Keep each file under GitHub's **100 MB per-file limit** (≈720p is plenty for a
   phone). If a file is larger, `git push` will reject it — compress it first, or
   host it elsewhere (e.g. an unlisted YouTube link) and link to it instead.
+- **Always commit the converted `.mp4`, never the camera original.** `.mov` is
+  gitignored for exactly this reason: phone/camera clips run ~10 Mbit/s, so a
+  70-second demo lands around 90 MB, and git keeps it forever. Re-encoding the
+  lesson 3 demos took them from 458 MB to 72 MB with no visible quality loss.
+  Drop the `.mov` files in `lessons/<NN>/`, run the command below on each, and
+  commit only the `.mp4` that comes out.
 - To convert a `.mov`/large video to a web-friendly 720p MP4 with `ffmpeg`:
 
   ```sh
