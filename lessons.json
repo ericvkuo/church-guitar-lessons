@@ -1,9 +1,20 @@
 {
   "events": [
-    { "date": "2026-10-11", "title": "第四課", "note": "" },
+    { "date": "2026-11-08", "title": "第五課", "note": "" },
     { "date": "2026-11-28", "title": "敬拜學院結業式", "note": "上午" }
   ],
   "lessons": [
+    {
+      "lesson": 4,
+      "date": "2026-10-11",
+      "title": "複習與新歌〈將天敞開〉",
+      "description": "複習前三課的和弦、刷法與三首歌；學習結業式全班演出曲〈將天敞開〉與新和弦 C/E、G/D、C/D、Dm/F、Cm/E♭、Bm、A/C#。",
+      "files": [
+        { "name": "投影片", "path": "lessons/04/吉他入門_第四課.pdf", "type": "pdf" },
+        { "name": "將天敞開（樂譜 1）", "path": "lessons/04/將天敞開_1.jpg", "type": "image" },
+        { "name": "將天敞開（樂譜 2）", "path": "lessons/04/將天敞開_2.jpg", "type": "image" }
+      ]
+    },
     {
       "lesson": 3,
       "date": "2026-09-13",
