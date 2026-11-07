@@ -1,9 +1,20 @@
 {
   "events": [
-    { "date": "2026-11-08", "title": "第五課", "note": "" },
     { "date": "2026-11-28", "title": "敬拜學院結業式", "note": "上午" }
   ],
   "lessons": [
+    {
+      "lesson": 5,
+      "date": "2026-11-08",
+      "title": "結業式演出練習",
+      "description": "練習結業式的兩首演出曲〈小小的夢想〉與〈將天敞開〉；〈將天敞開〉的難和弦換成簡單版（D、C、G、Fmaj7、Bm7、A），新和弦 Fmaj7。",
+      "files": [
+        { "name": "投影片", "path": "lessons/05/吉他入門_第五課.pdf", "type": "pdf" },
+        { "name": "將天敞開（簡單版標記 1）", "path": "lessons/05/將天敞開_簡單版_1.jpg", "type": "image" },
+        { "name": "將天敞開（簡單版標記 2）", "path": "lessons/05/將天敞開_簡單版_2.jpg", "type": "image" },
+        { "name": "小小的夢想（樂譜）", "path": "lessons/01/小小的夢想.jpg", "type": "image" }
+      ]
+    },
     {
       "lesson": 4,
       "date": "2026-10-11",
